@@ -1,0 +1,76 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<div class="container pt-5">
+	<div class="nav-item">
+	  <% if current_user.roles.collect(&:name).include?("admin") %>
+	    <span class="f_color natigation-top list-unstyled topbar-right-menu float-left mb-0"><b>
+	      <%= link_to "Home", authenticated_root_path %> > <%= link_to "Categories", categories_path %></b></span></br>
+	  <% else %>
+	  	<span class="f_color natigation-top list-unstyled topbar-right-menu float-left mb-0"><b><%= link_to "Home", authenticated_root_path %> > <%= link_to "Products", products_path %></b></span></br>
+	  <% end %>
+	</div>
+	<div class="container pt-3">
+		<div class="text-center">
+			<h5>Welcome to Home Page</h5>
+			<% if current_user.roles.collect(&:name).include?("admin") %>
+				Hi Admin
+			<% else %>
+				Hi User
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<% if current_user.roles.collect(&:name).include?("admin") %>
+  <div class="container-fluid mt-3">
+    <div class="row">
+      <div class="col-12">
+        <div class="align-items-center justify-content-between mb-3">
+          <h4 class="header-title mb-0">Users List</h4>
+        </div>  
+        <table class="table" style="text-align: center;">
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>User Email</th>
+              <th>Account Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @users.each do |user| %>
+              <tr>
+                <td><%= user.id %></td>
+                <td><%= user.email %></td>
+                <td>
+                  <%= user.active === true  ? "Active" : "InActive" %>
+                </td>
+                <td>
+                	<% if user.active == true %>
+                    <button class='active_user', id="<%=user.id%>">Disable User</button>
+                  <% else %>
+                    <button class='active_user', id="<%=user.id%>">Enable User</button>
+                  <% end %>              	
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<%end%>
+
+<script>
+  $(document).ready(function(){
+    $(".active_user").click(function(){
+      debugger
+      $.ajax({
+        url: '/sessions/disable/'+this.id,
+        type: 'POST'
+        // data: {"this.id": this.checked}
+      });  
+    });
+  });
+</script>
+

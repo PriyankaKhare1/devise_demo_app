@@ -1,0 +1,17 @@
+
+<div class="container">
+  <% @products.each_slice(3) do |products| %>
+    <div class="row">
+      <% products.each do |product| %>
+        <div class="col-md-4">
+          <div style="text-align: center;">
+            <div class="thumbnail">
+              <%= image_tag product.image.url(:medium), :size => "250x170" %>
+            </div><br>
+            <%= product.name%>
+          </div></br>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+</div>

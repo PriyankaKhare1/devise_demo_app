@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DeviseDemoApp</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header class="navbar-custom">
+      <div class="container">
+        <ul class="list-unstyled topbar-right-menu float-right mb-0 navbar navbar-fixed-top navbar-inverse">
+          <% if !user_signed_in? %>
+            <li><p class="sign_in"><%= link_to "Login", new_user_session_path %></p></li>
+          <% end %>
+          <% if user_signed_in? %>
+            <li><p class="sign_out"><%= link_to("Logout", destroy_user_session_path, :method => :delete) %></p></li>
+          <% end %>
+        </ul>
+      </div>
+    </header>
+    <div class="container">
+      <%= yield %>
+        <p class="notice"><%= notice %></p>
+        <p class="alert"><%= alert %></p>
+    </div>
+  </body>
+</html>
