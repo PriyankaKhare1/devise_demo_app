@@ -13,6 +13,7 @@
     <header class="navbar-custom">
       <div class="container">
         <ul class="list-unstyled topbar-right-menu float-right mb-0 navbar navbar-fixed-top navbar-inverse">
+          <li><p><%= link_to "Cart", cart_path(@cart) %><span class="badge"><%=@cart.line_items.count%></span></p></li>
           <% if !user_signed_in? %>
             <li><p class="sign_in"><%= link_to "Login", new_user_session_path %></p></li>
           <% end %>

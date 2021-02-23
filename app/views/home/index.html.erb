@@ -64,7 +64,6 @@
 <script>
   $(document).ready(function(){
     $(".active_user").click(function(){
-      debugger
       $.ajax({
         url: '/sessions/disable/'+this.id,
         type: 'POST'

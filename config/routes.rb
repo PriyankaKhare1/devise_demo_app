@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  # resources :line_items
+  resources :carts
   # get 'products/index'
   # get 'products/new'
   # get 'products/edit'
@@ -22,6 +24,11 @@ Rails.application.routes.draw do
 
   unauthenticated :user do
     root 'dashboard#index', as: :unauthenticated_root
+  end
+
+  resources :line_items do
+    post 'decrease', on: :member
+    post 'increase', on: :member
   end
 
 end

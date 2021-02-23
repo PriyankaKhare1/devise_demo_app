@@ -1,4 +1,4 @@
-
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <div class="container">
   <% @products.each_slice(3) do |products| %>
     <div class="row">
@@ -8,10 +8,26 @@
             <div class="thumbnail">
               <%= image_tag product.image.url(:medium), :size => "250x170" %>
             </div><br>
-            <%= product.name%>
+            <span><%= product.name%></br>
+                  Price: <%= product.price%></br>
+                  <button class='cart' id="<%=product.id%>">Add to Cart</button>
+            </span>
+            
           </div></br>
         </div>
       <% end %>
     </div>
   <% end %>
 </div>
+
+<script>
+  $(document).ready(function(){
+    $(".cart").click(function(){
+      $.ajax({
+        url: '/line_items',
+        type: 'POST',
+        data: {product_id: this.id}
+      });  
+    });
+  });
+</script>

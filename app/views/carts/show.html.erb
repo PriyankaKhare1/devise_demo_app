@@ -1,0 +1,60 @@
+<!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+<p id="notice"><%= notice %></p>
+<div class="container pt-4">
+  <h2>Cart Items</h2>
+
+  <table class="table text-center">
+    <thead>
+      <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @cart.line_items.each do |line_item| %>
+        <tr>
+          <td><%= line_item.product.name %></td>
+          <td>
+            <span id="<%= line_item.id %>" class="decrease"><button class="btn btn-danger">-</button></span>
+            <span><%= line_item.quantity %></span>
+            <span id="<%= line_item.id %>" class="increase"><button class="btn btn-success">+</button></span>
+          </td>
+          <td><%= line_item.total_price %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th></th>
+        <th>Total</th>
+        <th><%=@cart.total_price%></th>
+      </tr>
+    </tfoot>
+  </table>
+</div>
+
+
+<%= link_to 'Back', authenticated_root_path %>
+
+
+<script>
+  $(document).ready(function(){
+    $(".increase").click(function(){
+      $.ajax({
+        url: '/line_items/'+this.id+'/increase',
+        type: 'POST',
+        // data: {line_item_id: this.id}
+      });  
+    });
+
+    $(".decrease").click(function(){
+      $.ajax({
+        url: '/line_items/'+this.id+'/decrease',
+        type: 'POST',
+        // data: {line_item_id: this.id}
+      });  
+    });
+  });
+</script>
